@@ -1,0 +1,17 @@
+{
+  "name": "devoirs-nodejs-apirest",
+  "version": "1.0.0",
+  "description": "exo mvc nodejs apirest",
+  "main": "./Biblioteque de livres/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Ulrich",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
