@@ -43,10 +43,60 @@ const contactController = {
         getAllContacts: (req,res)=>{
                 fs.readFile(databsejsonPath, "utf8", (err, data) => {
                     if(err) throw err;
+
                     const database = JSON.parse(data);
                     res.status(200).json(database);
                 })
-            },
+        },
+
+        getContactById: (req,res)=>{
+
+                const {id} = req.params;
+        
+                fs.readFile(databsejsonPath, "utf8", (err, data) => {
+                    if(err) throw err;
+                    const database = JSON.parse(data);
+        
+                    database.map((item)=>{
+                        item.id == id? res.status(200).send(item) : res.status(400).json({msg: "invalid id"})
+                    })
+                })
+        },
+
+        // updateContact: (req, res) =>{ 
+        
+        //         fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
+        //             if(err) throw err;
+            
+        //             let database = JSON.parse(data);
+        
+        //             const {name, tel, email} = req.body
+        //             const {id} = req.params
+        
+        //             database.map((item)=>{
+        
+        //                if(item.id == id){
+        
+        //                 name? item.name = name : item.name = item.name;
+        //                 tel? item.tel = tel : item.tel = item.tel;
+        //                 email? item.email = email : item.email = item.email;
+        
+        //                 res.status(200).send({msg: "Updated successfully"});
+                        
+        //                } else {res.status(400).send({msg: "Invalid id"})}
+        //             })
+        
+        //             fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
+        //                 if (err) throw err;
+        //             })
+        //             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
+        //                 if (err) throw err;
+        //             })
+        //         })
+        //     },
+
+
+        
 }
 
 export default contactController
