@@ -32,7 +32,7 @@ const bookController = {
                 if (err) throw err;
             })
         })
-        res.status(200).send({msg: "Created Successfully"})
+        res.status(201).send({msg: "Created Successfully"})
         }
     },
 
