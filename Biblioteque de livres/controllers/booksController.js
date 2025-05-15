@@ -16,7 +16,7 @@ const bookController = {
                 "name": name,
                 "author": author,
                 "price": price
-            }
+            } // Ajout de l'id à l'objet req.body
 
             fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
             if(err) throw err;
@@ -27,7 +27,6 @@ const bookController = {
     
             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
-                
             })
         })
         res.status(200).send({msg: "Created Successfully"})
@@ -77,16 +76,36 @@ const bookController = {
                 
                } else {res.status(400).send({msg: "Invalid id"})}
             })
-            console.log(database);
-            
 
             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
-                
             })
         })
-
     },
+
+    deleteBook: (req, res) =>{ 
+
+        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
+            if(err) throw err;
+    
+            let database = JSON.parse(data);
+
+            const {id} = req.params
+            database.map((item, index)=>{
+               if(item.id == id){
+
+                database.splice(index, 1);
+
+                res.status(200).send({msg: "Deleted successfully"})
+
+               } else {res.status(400).send({msg: "Invalid id"})}
+            })
+
+            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+                if (err) throw err;
+            })
+        })
+    }
 }
 
 export default bookController 
