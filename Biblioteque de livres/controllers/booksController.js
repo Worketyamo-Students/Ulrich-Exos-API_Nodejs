@@ -27,6 +27,9 @@ const bookController = {
     
             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
+            });
+            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
+                if (err) throw err;
             })
         })
         res.status(200).send({msg: "Created Successfully"})
@@ -80,6 +83,9 @@ const bookController = {
             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
+            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
+                if (err) throw err;
+            })
         })
     },
 
@@ -102,6 +108,9 @@ const bookController = {
             })
 
             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+                if (err) throw err;
+            })
+            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
         })
