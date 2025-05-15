@@ -57,9 +57,15 @@ const contactController = {
                     if(err) throw err;
                     const database = JSON.parse(data);
         
-                    database.map((item)=>{
-                        item.id == id? res.status(200).send(item) : res.status(400).json({msg: "invalid id"})
-                    })
+                    let findContact = database.map(item=>{
+                        // item.id == id? res.status(200).send(item) : null;
+                        if(item.id == id){
+                            return item;
+                        }else{return null}
+                    }).filter(item => item !== null);
+                    if(findContact.length>0){
+                        res.status(200).send(findContact[0])
+                    }else{res.status(404).send({msg: "invalid id"})}
                 })
         },
 
@@ -73,20 +79,31 @@ const contactController = {
                     const {name, tel, email} = req.body
                     const {id} = req.params
         
-                    database.map((item)=>{
+                    // database.map((item)=>{
         
-                       if(item.id == id){
+                    //    if(item.id == id){
         
-                        name? item.name = name : item.name = item.name;
-                        tel? item.tel = tel : item.tel = item.tel;
-                        email? item.email = email : item.email = item.email;
-        
-                        res.status(200).send({msg: "Updated successfully"});
+                    //     name? item.name = name : item.name = item.name;
+                    //     tel? item.tel = tel : item.tel = item.tel;
+                    //     email? item.email = email : item.email = item.email;
                         
-                       } else {res.status(400).send({msg: "Invalid id"})}
-                    })
+                    //    } else {return res.status(404).send({msg: "Invalid id"})}
+                    // })
+
+                    let findContact = database.map(item=>{
+                        // item.id == id? res.status(200).send(item) : null;
+                        if(item.id == id){
+                            name? item.name = name : item.name = item.name;
+                            tel? item.tel = tel : item.tel = item.tel;
+                            email? item.email = email : item.email = item.email;
+                            return item;
+                        }else{return null}
+                    }).filter(item => item !== null);
+                    if(findContact.length>0){
+                        res.status(200).send({msg: "Updated successfuly"})
+                    }else{res.status(404).send({msg: "invalid id"})}
         
-                    fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
+                    fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
                         if (err) throw err;
                     })
                     fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
@@ -95,7 +112,32 @@ const contactController = {
                 })
             },
 
-
+        // deleteContact: (req, res) =>{ 
+        
+        //         fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
+        //             if(err) throw err;
+            
+        //             let database = JSON.parse(data);
+        
+        //             const {id} = req.params
+        //             database.map((item, index)=>{
+        //                if(item.id == id){
+        
+        //                 database.splice(index, 1);
+        
+        //                 res.status(200).send({msg: "Deleted successfully"})
+        
+        //                } else {res.status(400).send({msg: "Invalid id"})}
+        //             })
+        
+        //             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+        //                 if (err) throw err;
+        //             })
+        //             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
+        //                 if (err) throw err;
+        //             })
+        //         })
+        //     }
         
 }
 
