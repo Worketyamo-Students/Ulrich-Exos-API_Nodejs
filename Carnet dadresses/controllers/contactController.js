@@ -40,13 +40,13 @@ const contactController = {
             }
         },
 
-        // getAllContacts: (req,res)=>{
-        //         fs.readFile(databsejsonPath, "utf8", (err, data) => {
-        //             if(err) throw err;
-        //             const database = JSON.parse(data);
-        //             res.status(200).json(database);
-        //         })
-        //     },
+        getAllContacts: (req,res)=>{
+                fs.readFile(databsejsonPath, "utf8", (err, data) => {
+                    if(err) throw err;
+                    const database = JSON.parse(data);
+                    res.status(200).json(database);
+                })
+            },
 }
 
 export default contactController
