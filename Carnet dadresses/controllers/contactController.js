@@ -63,37 +63,37 @@ const contactController = {
                 })
         },
 
-        // updateContact: (req, res) =>{ 
+        updateContact: (req, res) =>{ 
         
-        //         fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
-        //             if(err) throw err;
+                fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
+                    if(err) throw err;
             
-        //             let database = JSON.parse(data);
+                    let database = JSON.parse(data);
         
-        //             const {name, tel, email} = req.body
-        //             const {id} = req.params
+                    const {name, tel, email} = req.body
+                    const {id} = req.params
         
-        //             database.map((item)=>{
+                    database.map((item)=>{
         
-        //                if(item.id == id){
+                       if(item.id == id){
         
-        //                 name? item.name = name : item.name = item.name;
-        //                 tel? item.tel = tel : item.tel = item.tel;
-        //                 email? item.email = email : item.email = item.email;
+                        name? item.name = name : item.name = item.name;
+                        tel? item.tel = tel : item.tel = item.tel;
+                        email? item.email = email : item.email = item.email;
         
-        //                 res.status(200).send({msg: "Updated successfully"});
+                        res.status(200).send({msg: "Updated successfully"});
                         
-        //                } else {res.status(400).send({msg: "Invalid id"})}
-        //             })
+                       } else {res.status(400).send({msg: "Invalid id"})}
+                    })
         
-        //             fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
-        //                 if (err) throw err;
-        //             })
-        //             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-        //                 if (err) throw err;
-        //             })
-        //         })
-        //     },
+                    fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
+                        if (err) throw err;
+                    })
+                    fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
+                        if (err) throw err;
+                    })
+                })
+            },
 
 
         
