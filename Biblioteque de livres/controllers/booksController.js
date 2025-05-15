@@ -53,7 +53,40 @@ const bookController = {
                 item.id == id? res.status(200).send(item) : res.status(400).json({msg: "invalid id"})
             })
         })
-    }
+    },
+
+    updateBook: (req, res) =>{ 
+
+        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
+            if(err) throw err;
+    
+            let database = JSON.parse(data);
+
+            const {name, author, price} = req.body
+            const {id} = req.params
+
+            database.map((item)=>{
+
+               if(item.id == id){
+
+                name? item.name = name : item.name = item.name;
+                author? item.author = author : item.author = item.author;
+                price? item.price = price : item.price = item.price;
+
+                res.status(200).send({msg: "Updated successfully"});
+                
+               } else {res.status(400).send({msg: "Invalid id"})}
+            })
+            console.log(database);
+            
+
+            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+                if (err) throw err;
+                
+            })
+        })
+
+    },
 }
 
 export default bookController 
