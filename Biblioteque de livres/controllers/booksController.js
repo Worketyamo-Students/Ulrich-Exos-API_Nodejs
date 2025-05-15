@@ -42,18 +42,18 @@ const bookController = {
         })
     },
 
-    // getBookById: (req,res)=>{
-    //     const {id} = req.params;
+    getBookById: (req,res)=>{
+        const {id} = req.params;
 
-    //     fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf8", (err, data) => {
-    //         if(err) throw err;
-    //         const database = JSON.parse(data);
+        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf8", (err, data) => {
+            if(err) throw err;
+            const database = JSON.parse(data);
 
-    //         database.map((item, index)=>{
-    //             item.id == id? res.status(200).send(item) : res.status(400).json({msg: "invalid id"})
-    //         })
-    //     })
-    // }
+            database.map((item, index)=>{
+                item.id == id? res.status(200).send(item) : res.status(400).json({msg: "invalid id"})
+            })
+        })
+    }
 }
 
 export default bookController 
