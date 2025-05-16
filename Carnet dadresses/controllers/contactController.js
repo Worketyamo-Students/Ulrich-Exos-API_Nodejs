@@ -91,7 +91,6 @@ const contactController = {
                     // })
 
                     let findContact = database.map(item=>{
-                        // item.id == id? res.status(200).send(item) : null;
                         if(item.id == id){
                             name? item.name = name : item.name = item.name;
                             tel? item.tel = tel : item.tel = item.tel;
@@ -112,32 +111,35 @@ const contactController = {
                 })
             },
 
-        // deleteContact: (req, res) =>{ 
+        deleteContact: (req, res) =>{ 
         
-        //         fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
-        //             if(err) throw err;
+                fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
+                    if(err) throw err;
             
-        //             let database = JSON.parse(data);
+                    let database = JSON.parse(data);
         
-        //             const {id} = req.params
-        //             database.map((item, index)=>{
-        //                if(item.id == id){
+                    const {id} = req.params
+                    let findContact = database.map((item,index)=>{
+                        if(item.id == id){
+                            return index;
+
+                        }else{
+                            return null
+                        }
+                    }).filter(item => item !== null);
+                    if(findContact.length>0){
+                        database.splice(findContact,1)
+                        res.status(200).send({msg: "Book deleted"})
+                    }else{res.status(404).send({msg: "invalid id"})}
         
-        //                 database.splice(index, 1);
-        
-        //                 res.status(200).send({msg: "Deleted successfully"})
-        
-        //                } else {res.status(400).send({msg: "Invalid id"})}
-        //             })
-        
-        //             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
-        //                 if (err) throw err;
-        //             })
-        //             fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
-        //                 if (err) throw err;
-        //             })
-        //         })
-        //     }
+                    fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
+                        if (err) throw err;
+                    })
+                    fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
+                        if (err) throw err;
+                    })
+                })
+            }
         
 }
 
