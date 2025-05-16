@@ -1,1 +1,4 @@
 recived request: GET; /events: Fri May 16 2025 13:29:31 GMT+0100 (heure normale d’Afrique de l’Ouest) 
+Event added Fri May 16 2025 13:36:56 GMT+0100 (heure normale d’Afrique de l’Ouest)
+recived request: GET; /events/: Fri May 16 2025 13:37:28 GMT+0100 (heure normale d’Afrique de l’Ouest) 
+recived request: GET; /events/c5863ffc-8831-4409-8ab3-0a6f4c196a23: Fri May 16 2025 13:37:40 GMT+0100 (heure normale d’Afrique de l’Ouest) 

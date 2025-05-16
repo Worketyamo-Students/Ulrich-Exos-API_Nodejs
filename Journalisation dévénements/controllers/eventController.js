@@ -61,7 +61,32 @@ const eventController = {
                         })
                         res.status(200).json(database);
                     })
-                }
+                },
+    
+    getEventById: (req,res)=>{
+    
+                    const {id} = req.params;
+            
+                    fs.readFile(databsejsonPath, "utf8", (err, data) => {
+                        if(err) throw err;
+                        const database = JSON.parse(data);
+            
+                        let findContact = database.map(item=>{
+
+                            if(item.id == id){
+                                return item;
+                            }else{return null}
+                        }).filter(item => item !== null);
+                        if(findContact.length>0){
+                            logStream.write(`recived request: ${req.method}; ${req.url}: ${Date()} \n`, (err)=>{
+                            if (err) throw err
+                            console.log("Write completed");
+                            
+                        })
+                            res.status(200).send(findContact[0])
+                        }else{res.status(404).send({msg: "invalid id"})}
+                    })
+    }
 }
 
 export default eventController
