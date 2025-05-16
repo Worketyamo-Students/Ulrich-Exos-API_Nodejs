@@ -2,6 +2,9 @@ import fs from "fs";
 
 let id = Math.floor(Math.random() * 20); //Genere un id aleatoire
 
+const databsejsonPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json";
+const databsecsvPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv";
+
 const bookController = {
 
     createBook: (req, res)=>{
@@ -18,17 +21,17 @@ const bookController = {
                 "price": price
             } // Ajout de l'id à l'objet req.body
 
-            fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
+            fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
             if(err) throw err;
     
             let database = JSON.parse(data);
             
             database.push(book);
     
-            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             });
-            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
         })
@@ -37,7 +40,7 @@ const bookController = {
     },
 
     getAllBooks: (req,res)=>{
-        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf8", (err, data) => {
+        fs.readFile(databsejsonPath, "utf8", (err, data) => {
             if(err) throw err;
             const database = JSON.parse(data);
             res.status(200).json(database);
@@ -47,7 +50,7 @@ const bookController = {
     getBookById: (req,res)=>{
         const {id} = req.params;
 
-        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf8", (err, data) => {
+        fs.readFile(databsejsonPath, "utf8", (err, data) => {
             if(err) throw err;
             const database = JSON.parse(data);
 
@@ -59,7 +62,7 @@ const bookController = {
 
     updateBook: (req, res) =>{ 
 
-        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
+        fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
             if(err) throw err;
     
             let database = JSON.parse(data);
@@ -80,10 +83,10 @@ const bookController = {
                } else {res.status(400).send({msg: "Invalid id"})}
             })
 
-            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
-            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
         })
@@ -91,7 +94,7 @@ const bookController = {
 
     deleteBook: (req, res) =>{ 
 
-        fs.readFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", "utf-8", (err, data)=>{
+        fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
             if(err) throw err;
     
             let database = JSON.parse(data);
@@ -107,10 +110,10 @@ const bookController = {
                } else {res.status(400).send({msg: "Invalid id"})}
             })
 
-            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json", JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
-            fs.writeFile("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv", JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
         })

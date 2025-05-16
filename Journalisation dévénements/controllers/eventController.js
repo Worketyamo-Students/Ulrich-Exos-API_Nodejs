@@ -1,10 +1,13 @@
 import fs from "fs";
 import { randomUUID } from "crypto";
-import { time } from "console";
+import zlib from "zlib"
+import { pipeline } from 'node:stream';
+
 
 const databsejsonPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/database.json";
 const databsecsvPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/databse.csv";
 const logStream = fs.createWriteStream("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/log.txt", { encoding: "utf-8", flags: "a" });
+
 const eventController = {
   createEvent: (req, res) => {
     const { name, date, origin } = req.body;
@@ -74,12 +77,12 @@ const eventController = {
             return null;
           }
         }).filter((item) => item !== null);
-      if (findEvent.length > 0) {
         logStream.write(`recived request: ${req.method}; ${req.url}: ${Date()} \n`, (err) => {
             if (err) throw err;
             console.log("Write completed");
           }
         );
+      if (findEvent.length > 0) {
         res.status(200).send(findEvent[0]);
       } else {
         res.status(404).send({ msg: "Not found: invalid id" });
@@ -165,6 +168,20 @@ const eventController = {
             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
+    })
+  },
+  compressLogs: (req, res)=>{
+    const gzip = zlib.createGzip()
+    const input = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/log.txt"
+    const output = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/compress.txt.gz"
+    const source = fs.createReadStream(input);
+    const destination = fs.createWriteStream(output);
+    pipeline(source, gzip, destination, (err) => {
+        if (err) throw err
+
+        console.log("Compression was succesfully");
+        res.status(200).json({msg: "Compression was succesfully"})
+            
     })
   }
 };
