@@ -79,17 +79,6 @@ const contactController = {
                     const {name, tel, email} = req.body
                     const {id} = req.params
         
-                    // database.map((item)=>{
-        
-                    //    if(item.id == id){
-        
-                    //     name? item.name = name : item.name = item.name;
-                    //     tel? item.tel = tel : item.tel = item.tel;
-                    //     email? item.email = email : item.email = item.email;
-                        
-                    //    } else {return res.status(404).send({msg: "Invalid id"})}
-                    // })
-
                     let findContact = database.map(item=>{
                         if(item.id == id){
                             name? item.name = name : item.name = item.name;
@@ -139,8 +128,19 @@ const contactController = {
                         if (err) throw err;
                     })
                 })
-            }
+         },
         
+         getStatus: (req,res)=>{
+
+            fs.readFile(databsejsonPath, "utf8", (err, data) => {
+                    if(err) throw err;
+
+                    const nombreElements = JSON.parse(data).length;
+                    const systeme = os.arch + " " + os.type
+
+                    res.status(200).send(`Infos du systeme: ${systeme}. \nLa database a ${nombreElements} elements`);
+                })
+         }
 }
 
 export default contactController
