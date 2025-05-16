@@ -1,6 +1,5 @@
 import fs from "fs";
 import os from "os";
-import path from "path";
 import { randomUUID } from "crypto";
 
 const databsejsonPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Carnet dadresses/database.json";

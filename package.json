@@ -2,7 +2,7 @@
   "name": "devoirs-nodejs-apirest",
   "version": "1.0.0",
   "description": "exo mvc nodejs apirest",
-  "main": "./Carnet dadresses/app.js",
+  "main": "./Journalisation dévénements/app.js",
   "type": "module",
   "scripts": {
     "start": "nodemon app.js"
