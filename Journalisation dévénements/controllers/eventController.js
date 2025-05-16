@@ -44,7 +44,24 @@ const eventController = {
                     });
             }
             res.status(201).send({msg: "Created Successfully"});
-    }
+    },
+
+    getAllEvents: (req,res)=>{
+
+                    
+                    fs.readFile(databsejsonPath, "utf8", (err, data) => {
+                        if(err) throw err;
+    
+                        const database = JSON.parse(data);
+                        
+                        logStream.write(`recived request: ${req.method}; ${req.url}: ${Date()} \n`, (err)=>{
+                            if (err) throw err
+                            console.log("Write completed");
+                            
+                        })
+                        res.status(200).json(database);
+                    })
+                }
 }
 
 export default eventController
