@@ -22,5 +22,11 @@
     "name": "noel",
     "author": "25/12",
     "price": "Christ"
+  },
+  {
+    "id": 6,
+    "name": "Jujutsu Kaisen",
+    "author": "Gege Akutami",
+    "price": 15000
   }
 ]

@@ -1,14 +1,14 @@
 import { Router } from "express";
 
-const router = Router();
+const eventRouter = Router();
 
 import eventController from "../controllers/eventController.js";
 
-router.post("/events", eventController.createEvent);
-router.get ('/events', eventController.getAllEvents);
-router.get ('/events/compress-logs', eventController.compressLogs);
-router.get ('/events/:id', eventController.getEventById);
-router.put ('/events/:id', eventController.updateEvent);
-router.delete ('/events/:id', eventController.deleteEvent);
+eventRouter.post("/events", eventController.createEvent);
+eventRouter.get ('/events', eventController.getAllEvents);
+eventRouter.get ('/events/compress-logs', eventController.compressLogs);
+eventRouter.get ('/events/:id', eventController.getEventById);
+eventRouter.put ('/events/:id', eventController.updateEvent);
+eventRouter.delete ('/events/:id', eventController.deleteEvent);
 
-export default router;
+export default eventRouter;
