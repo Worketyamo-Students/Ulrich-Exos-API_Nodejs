@@ -8,3 +8,5 @@ Event updated Fri May 16 2025 14:28:53 GMT+0100 (heure normale d’Afrique de l�
 Event deleted Fri May 16 2025 14:29:06 GMT+0100 (heure normale d’Afrique de l’Ouest)
 recived request: GET; /events/compress-logs: Fri May 16 2025 15:17:41 GMT+0100 (heure normale d’Afrique de l’Ouest) 
 recived request: GET; /events/compress-logs: Fri May 16 2025 15:21:24 GMT+0100 (heure normale d’Afrique de l’Ouest) 
+recived request: GET; /events: Sat May 17 2025 11:06:39 GMT+0100 (heure normale d’Afrique de l’Ouest) 
+Event not added Sat May 17 2025 11:06:45 GMT+0100 (heure normale d’Afrique de l’Ouest)

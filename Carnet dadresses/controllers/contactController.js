@@ -2,8 +2,8 @@ import fs from "fs";
 import os from "os";
 import { randomUUID } from "crypto";
 
-const databsejsonPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Carnet dadresses/database.json";
-const databsecsvPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Carnet dadresses/database.csv";
+const databsejsonPath = "./Carnet dadresses/database.json";
+const databsecsvPath = "./Carnet dadresses/database.csv";
 
 const contactController = {
 

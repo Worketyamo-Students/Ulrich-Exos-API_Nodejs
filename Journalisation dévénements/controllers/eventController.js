@@ -4,9 +4,9 @@ import zlib from "zlib"
 import { pipeline } from 'node:stream';
 
 
-const databsejsonPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/database.json";
-const databsecsvPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/databse.csv";
-const logStream = fs.createWriteStream("/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/log.txt", { encoding: "utf-8", flags: "a" });
+const databsejsonPath = "./Journalisation dévénements/database.json";
+const databsecsvPath = "./Journalisation dévénements/databse.csv";
+const logStream = fs.createWriteStream("./Journalisation dévénements/log.txt", { encoding: "utf-8", flags: "a" });
 
 const eventController = {
   createEvent: (req, res) => {
@@ -172,8 +172,8 @@ const eventController = {
   },
   compressLogs: (req, res)=>{
     const gzip = zlib.createGzip()
-    const input = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/log.txt"
-    const output = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Journalisation dévénements/compress.txt.gz"
+    const input = "./Journalisation dévénements/log.txt"
+    const output = "./Journalisation dévénements/compress.txt.gz"
     const source = fs.createReadStream(input);
     const destination = fs.createWriteStream(output);
     pipeline(source, gzip, destination, (err) => {

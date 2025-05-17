@@ -2,8 +2,8 @@ import fs from "fs";
 
 let id = Math.floor(Math.random() * 20); //Genere un id aleatoire
 
-const databsejsonPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.json";
-const databsecsvPath = "/home/ulrich/Bureau/Devoirs NodeJS APIRest/Biblioteque de livres/database.csv";
+const databsejsonPath = "./Biblioteque de livres/database.json";
+const databsecsvPath = "./Biblioteque de livres/database.csv";
 
 const bookController = {
 
@@ -28,7 +28,7 @@ const bookController = {
             
             database.push(book);
     
-            fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
+            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
                 if (err) throw err;
             });
             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
