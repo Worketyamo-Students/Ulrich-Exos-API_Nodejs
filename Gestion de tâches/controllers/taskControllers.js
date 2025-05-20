@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, { readFile } from "fs";
 import { randomUUID } from "crypto";
 import { Writable } from "stream";
 import { promisify } from "util";
@@ -42,9 +42,43 @@ const taskControllers = {
                     newtask: newTask
                 })
                 
-            })
+            }) //Il faut encore synchroniser avec le fichier database.csv
         })
     },
+
+    getAllTasks: (req, res)=>{
+        fs.readFile(databsejsonPath, (err, data)=>{
+        if(err) throw err;
+
+        let database = JSON.parse(data);
+        res.status(200).send(database)
+        })
+    },
+
+    getTaskById: (req, res)=>{
+
+        const {id} = req.params;
+
+        fs.readFile(databsejsonPath, (err, data)=>{
+        if(err) throw err;
+
+        let database = JSON.parse(data);
+        const index = database.findIndex(task => task.id === id);
+        console.log(index);
+        
+        res.send(database[index]);
+        // let findTask = database.map(item=>{
+
+        //         if(item.id == id){
+        //             return item;
+        //         }else{return null}
+        // }).filter(item => item !== null);
+        // if(findTask.length>0){
+        //     res.status(200).send(findTask[0])
+        // }else{res.status(404).send({msg: "invalid id"})}
+        
+        })
+    }
 }
 
 
