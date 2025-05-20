@@ -36,18 +36,18 @@ const productController = {
                 })
                 res.status(201).send({msg: "Created Successfully"})
                 }
-            },
+    },
     
-            getAllProducts: (req,res)=>{
+    getAllProducts: (req,res)=>{
                     fs.readFile(databsejsonPath, "utf8", (err, data) => {
                         if(err) throw err;
     
                         const database = JSON.parse(data);
                         res.status(200).json(database);
                     })
-            },
+    },
     
-            getProductById: (req,res)=>{
+    getProductById: (req,res)=>{
     
                     const {id} = req.params;
             
@@ -65,9 +65,9 @@ const productController = {
                             res.status(200).send(findProduct[0])
                         }else{res.status(404).send({msg: "invalid id"})}
                     })
-            },
+    },
     
-            updateProduct: (req, res) =>{ 
+    updateProduct: (req, res) =>{ 
             
                     fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
                         if(err) throw err;
@@ -96,9 +96,9 @@ const productController = {
                             if (err) throw err;
                         })
                     })
-                },
+    },
     
-            deleteProduct: (req, res) =>{ 
+    deleteProduct: (req, res) =>{ 
             
                     fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
                         if(err) throw err;
@@ -126,11 +126,11 @@ const productController = {
                             if (err) throw err;
                         })
                     })
-            },
+    },
 
-            getProductsWithPromos: (req, res) => {
+    getProductsWithPromos: (req, res) => {
                 
-            }
+    }
 
 }
 
