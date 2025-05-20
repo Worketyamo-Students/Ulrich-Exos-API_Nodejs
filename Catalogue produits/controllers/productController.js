@@ -98,34 +98,35 @@ const productController = {
                     })
     },
     
-    deleteProduct: (req, res) =>{ 
+    deleteProduct: (req, res) =>{
+
+        const {name, price, promo} = req.body
+        const {id} = req.params
             
-                    fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
-                        if(err) throw err;
+        fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
+            if(err) throw err;
                 
-                        let database = JSON.parse(data);
+            let database = JSON.parse(data);
             
-                        const {id} = req.params
-                        let findProduct = database.map((item,index)=>{
-                            if(item.id == id){
-                                return index;
+            let findProduct = database.map((item,index)=>{
+                if(item.id == id){
+                    return index;
     
-                            }else{
-                                return null
-                            }
-                        }).filter(item => item !== null);
-                        if(findProduct.length>0){
-                            database.splice(findProduct,1)
-                            res.status(200).send({msg: "product deleted"})
-                        }else{res.status(404).send({msg: "invalid id"})}
+                }else{
+                    return null
+                    }}).filter(item => item !== null);
+            if(findProduct.length>0){
+                database.splice(findProduct,1)
+                res.status(200).send({msg: "product deleted"})
+            }else{res.status(404).send({msg: "invalid id"})}
             
-                        fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                            if (err) throw err;
-                        })
-                        fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                            if (err) throw err;
-                        })
-                    })
+            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
+                if (err) throw err;
+            })
+            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
+                if (err) throw err;
+            })
+        })
     },
 
     getProductsWithPromos: (req, res) => {

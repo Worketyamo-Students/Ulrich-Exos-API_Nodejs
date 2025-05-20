@@ -22,8 +22,7 @@ const taskControllers = {
             "completed": completed
         }
          //Ecoute de l'evenement
-        taskEmitter.on('task created', (task)=>
-            {
+        taskEmitter.on('task created', (task)=>{
             console.log(`the task ${title} has been created`);
             
         })
@@ -63,8 +62,13 @@ const taskControllers = {
         if(err) throw err;
 
         let database = JSON.parse(data);
-        const index = database.findIndex(task => task.id === id);
-        console.log(index);
+
+        const index = database.findIndex(task => task.id === id); //methode plus concise pour reperer l'element dans le tableau
+        if (index !== -1) {
+            res.status(200).send(database[index])
+        } else {
+            res.status(404).send({msg: "invalid id"});
+        }
         
         res.send(database[index]);
         // let findTask = database.map(item=>{
@@ -77,6 +81,73 @@ const taskControllers = {
         //     res.status(200).send(findTask[0])
         // }else{res.status(404).send({msg: "invalid id"})}
         
+        })
+    },
+
+    updateTask: (req, res)=>{
+
+
+        const {title, task, completed} = req.body;
+        const {id} = req.params;
+
+        taskEmitter.on('taskUpdated', (task)=>{
+            console.log(`the task ${title} has been updated`);
+            
+        })
+
+        fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
+            if(err) throw err;
+                
+            let database = JSON.parse(data);
+                        
+            let findTask = database.map(item=>{
+
+                if(item.id == id){
+                    title? item.title = title : item.title = item.title;
+                    task? item.task = task : item.task = item.task;
+                    completed? item.completed = completed : item.completed = item.completed;
+                    return item;
+
+                }else{return null}}).filter(item => item !== null);
+                
+                if(findTask.length>0){
+                    taskEmitter.emit("taskUpdated");
+                    res.status(200).send({msg: "Updated successfuly",
+                        updated: findTask[0]
+                    })
+                }else{res.status(404).send({msg: "Not Found:invalid id"})}
+            
+            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
+                if (err) throw err;
+            })
+        })
+
+    },
+
+    deleteTask: (req, res)=>{
+
+        const {title, task, completed} = req.body;
+        const {id} = req.params;
+
+        taskEmitter.on('taskDeleted', (task)=>{
+            console.log(`the task ${title} has been deleted`);
+            
+        })
+        fs.readFile(databsejsonPath, (err, data)=>{
+            if(err) throw err;
+
+            let database = JSON.parse(data);
+
+            const index = database.findIndex(task => task.id === id);
+            database.splice(index, 1)
+
+            taskEmitter.emit('taskDeleted');
+
+            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
+                if (err) throw err;
+            }) //Il faut synchroniser vaec le database.csv
+                    
+            res.status(200).send({msg: "Deleted successfuly"})
         })
     }
 }
