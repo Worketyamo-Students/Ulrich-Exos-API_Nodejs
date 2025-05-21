@@ -5,6 +5,12 @@ import { randomUUID } from "crypto";
 const databsejsonPath = "./Carnet dadresses/database.json";
 const databsecsvPath = "./Carnet dadresses/database.csv";
 
+const writeDatabasejson = (tableau)=>{
+    fs.writeFile(databsejsonPath, JSON.stringify(tableau,null,2) , (err, data)=>{
+        if (err) throw err;
+    });
+}
+
 const contactController = {
 
     createContact: (req, res)=>{
@@ -24,16 +30,13 @@ const contactController = {
                 fs.readFile(databsejsonPath , "utf-8", (err, data)=>{
                 if(err) throw err;
         
-                let database = JSON.parse(data);
+                let database = JSON.parse(data || "[]");
                 
                 database.push(book);
         
-                fs.writeFile(databsejsonPath , JSON.stringify(database,null,2) , (err, data)=>{
-                    if (err) throw err;
-                });
-                fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                    if (err) throw err;
-                })
+                writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
+
+                
             })
             res.status(201).send({msg: "Created Successfully"})
             }
@@ -90,12 +93,8 @@ const contactController = {
                         res.status(200).send({msg: "Updated successfuly"})
                     }else{res.status(404).send({msg: "invalid id"})}
         
-                    fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                        if (err) throw err;
-                    })
-                    fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                        if (err) throw err;
-                    })
+                    writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
+
                 })
             },
 
@@ -120,12 +119,9 @@ const contactController = {
                         res.status(200).send({msg: "Book deleted"})
                     }else{res.status(404).send({msg: "invalid id"})}
         
-                    fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                        if (err) throw err;
-                    })
-                    fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                        if (err) throw err;
-                    })
+                    writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
+
+                    
                 })
          },
         

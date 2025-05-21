@@ -1,13 +1,19 @@
 import fs, { readFile } from "fs";
 import { randomUUID } from "crypto";
-import { Writable } from "stream";
-import { promisify } from "util";
+// import { Writable } from "stream";
+// import { promisify } from "util";
 import {EventEmitter} from "events";
 
 const taskEmitter = new EventEmitter();
 
 const databsejsonPath = "./Gestion de tâches/database.json";
 const databsecsvPath = "./Gestion de tâches/database.csv";
+
+const writeDatabasejson = (tableau)=>{
+    fs.writeFile(databsejsonPath, JSON.stringify(tableau,null,2) , (err, data)=>{
+        if (err) throw err;
+    });
+}
 
 const taskControllers = {
 
@@ -29,19 +35,17 @@ const taskControllers = {
         fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
             if(err) throw err;
 
-            let database = JSON.parse(data);
+            let database = JSON.parse(data || "[]");
             database.push(newTask);
+            
+            writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
 
-            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2), (err)=>{
-                if (err) throw err;
-                
-                taskEmitter.emit('task created')//emettre l'evenement
-                res.status(200).json({
-                    msg: "Task created successfully",
-                    newtask: newTask
-                })
-                
-            }) //Il faut encore synchroniser avec le fichier database.csv
+            taskEmitter.emit('task created')//emettre l'evenement
+            res.status(200).json({
+                msg: "Task created successfully",
+                newtask: newTask
+            })
+
         })
     },
 
@@ -117,9 +121,7 @@ const taskControllers = {
                     })
                 }else{res.status(404).send({msg: "Not Found:invalid id"})}
             
-            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasejson(database);
         })
 
     },
@@ -143,9 +145,7 @@ const taskControllers = {
 
             taskEmitter.emit('taskDeleted');
 
-            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                if (err) throw err;
-            }) //Il faut synchroniser vaec le database.csv
+            writeDatabasejson(database); //Il faut synchroniser vaec le database.csv
                     
             res.status(200).send({msg: "Deleted successfuly"})
         })

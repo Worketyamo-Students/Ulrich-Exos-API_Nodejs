@@ -4,6 +4,12 @@ import { randomUUID } from "crypto";
 const databsejsonPath = "./Catalogue produits/database.json";
 const databsecsvPath = "./Catalogue produits/database.csv";
 
+const writeDatabasejson = (tableau)=>{
+    fs.writeFile(databsejsonPath, JSON.stringify(tableau,null,2) , (err, data)=>{
+        if (err) throw err;
+    });
+}
+
 const productController = {
 
     createProduct: (req, res)=>{
@@ -23,13 +29,12 @@ const productController = {
                     fs.readFile(databsejsonPath , "utf-8", (err, data)=>{
                     if(err) throw err;
             
-                    let database = JSON.parse(data);
+                    let database = JSON.parse(data || "[]");
                     
                     database.push(product);
             
-                    fs.writeFile(databsejsonPath , JSON.stringify(database,null,2) , (err, data)=>{
-                        if (err) throw err;
-                    });
+                    writeDatabasejson(database);
+
                     fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                         if (err) throw err;
                     })
@@ -89,9 +94,8 @@ const productController = {
                             res.status(200).send({msg: "Updated successfuly"})
                         }else{res.status(404).send({msg: "Not Found:invalid id"})}
             
-                        fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                            if (err) throw err;
-                        })
+                        writeDatabasejson(database);
+
                         fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                             if (err) throw err;
                         })
@@ -120,9 +124,8 @@ const productController = {
                 res.status(200).send({msg: "product deleted"})
             }else{res.status(404).send({msg: "invalid id"})}
             
-            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasejson(database);
+            
             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })

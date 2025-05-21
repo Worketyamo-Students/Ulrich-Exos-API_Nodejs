@@ -5,6 +5,12 @@ let id = Math.floor(Math.random() * 20); //Genere un id aleatoire
 const databsejsonPath = "./Biblioteque de livres/database.json";
 const databsecsvPath = "./Biblioteque de livres/database.csv";
 
+const writeDatabasejson = (tableau)=>{
+    fs.writeFile(databsejsonPath, JSON.stringify(tableau,null,2) , (err, data)=>{
+        if (err) throw err;
+    });
+}
+
 const bookController = {
 
     createBook: (req, res)=>{
@@ -24,13 +30,12 @@ const bookController = {
             fs.readFile(databsejsonPath, "utf-8", (err, data)=>{
             if(err) throw err;
     
-            let database = JSON.parse(data);
+            let database = JSON.parse(data || "[]");
             
             database.push(book);
     
-            fs.writeFile(databsejsonPath, JSON.stringify(database,null,2) , (err, data)=>{
-                if (err) throw err;
-            });
+            writeDatabasejson(database)
+
             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
@@ -83,9 +88,8 @@ const bookController = {
                } else {res.status(400).send({msg: "Invalid id"})}
             })
 
-            fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasejson(database);
+
             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
@@ -110,9 +114,8 @@ const bookController = {
                } else {res.status(400).send({msg: "Invalid id"})}
             })
 
-            fs.writeFile(databsejsonPath, JSON.stringify(database) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasejson(database);
+            
             fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
                 if (err) throw err;
             })
