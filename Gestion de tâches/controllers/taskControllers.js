@@ -15,6 +15,10 @@ const writeDatabasejson = (tableau)=>{
     });
 }
 
+const writeDatabasecsv = (tableau)=>{
+    const csv = ["id,title,task,completed"].concat(tableau.map(book => `${book.id}, ${book.title}, ${book.task}, ${book.completed}`)).join("\n")
+    fs.writeFileSync(databsecsvPath, csv)
+}
 const taskControllers = {
 
     createTask:(req,res) => {
@@ -39,6 +43,7 @@ const taskControllers = {
             database.push(newTask);
             
             writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
+            writeDatabasecsv(database)
 
             taskEmitter.emit('task created')//emettre l'evenement
             res.status(200).json({
@@ -122,6 +127,7 @@ const taskControllers = {
                 }else{res.status(404).send({msg: "Not Found:invalid id"})}
             
             writeDatabasejson(database);
+            writeDatabasecsv(database)
         })
 
     },
@@ -146,7 +152,7 @@ const taskControllers = {
             taskEmitter.emit('taskDeleted');
 
             writeDatabasejson(database); //Il faut synchroniser vaec le database.csv
-                    
+            writeDatabasecsv(database)      
             res.status(200).send({msg: "Deleted successfuly"})
         })
     }

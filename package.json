@@ -12,10 +12,12 @@
   "dependencies": {
     "body-parser": "^2.2.0",
     "chalk": "^5.4.1",
+    "csv-parse": "^5.6.0",
     "csv-stringify": "^6.5.2",
     "express": "^5.1.0",
     "jsonstream2": "^3.0.0",
     "nodemon": "^3.1.10",
-    "stream": "^0.0.3"
+    "stream": "^0.0.3",
+    "xlsx": "^0.18.5"
   }
 }

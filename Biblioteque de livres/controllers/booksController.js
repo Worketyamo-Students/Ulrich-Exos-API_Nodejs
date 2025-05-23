@@ -10,6 +10,10 @@ const writeDatabasejson = (tableau)=>{
         if (err) throw err;
     });
 }
+const writeDatabasecsv = (tableau)=>{
+    const csv = ["id,name,author,price"].concat(tableau.map(book => `${book.id}, ${book.name}, ${book.author}, ${book.price}`)).join("\n")
+    fs.writeFileSync(databsecsvPath, csv)
+}
 
 const bookController = {
 
@@ -36,9 +40,7 @@ const bookController = {
     
             writeDatabasejson(database)
 
-            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasecsv(database)
         })
         res.status(201).send({msg: "Created Successfully"})
         }
@@ -90,9 +92,7 @@ const bookController = {
 
             writeDatabasejson(database);
 
-            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasecsv(database)
         })
     },
 
@@ -116,9 +116,7 @@ const bookController = {
 
             writeDatabasejson(database);
             
-            fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-                if (err) throw err;
-            })
+            writeDatabasecsv(database)
         })
     }
 }

@@ -12,6 +12,11 @@ const writeDatabasejson = (tableau)=>{
         if (err) throw err;
     });
 }
+const writeDatabasecsv = (tableau)=>{
+    const csv = ["id,name,date,origin"].concat(tableau.map(book => `${book.id}, ${book.name}, ${book.date}, ${book.origin}`)).join("\n")
+    fs.writeFileSync(databsecsvPath, csv)
+}
+
 const logStream = fs.createWriteStream("./Journalisation dévénements/log.txt", { encoding: "utf-8", flags: "a" });
 
 const eventController = {
@@ -41,9 +46,7 @@ const eventController = {
 
         writeDatabasejson(database);
 
-        fs.writeFile(databsecsvPath, JSON.stringify(database), (err, data) => {
-          if (err) throw err;
-        });
+        writeDatabasecsv(database);
       });
       logStream.write("Event added " + Date() + "\n", () => {
         console.log("Write completed, do more writes now.");
@@ -128,9 +131,7 @@ const eventController = {
 
       writeDatabasejson(database);
 
-      fs.writeFile(databsecsvPath, JSON.stringify(database), (err, data) => {
-        if (err) throw err;
-      });
+      writeDatabasecsv(database);
     });
   },
   deleteEvent: (req, res) =>{
@@ -166,9 +167,7 @@ const eventController = {
           
         writeDatabasejson(database);
 
-        fs.writeFile(databsecsvPath, JSON.stringify(database) , (err, data)=>{
-            if (err) throw err;
-        })
+        writeDatabasecsv(database);
     })
   },
   compressLogs: (req, res)=>{

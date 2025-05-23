@@ -1,6 +1,9 @@
 import fs from "fs";
 import os from "os";
 import { randomUUID } from "crypto";
+// import { parse } from "jsonstream2";
+// import { Stringifier } from "csv-stringify";
+// import { pipeline } from "stream";
 
 const databsejsonPath = "./Carnet dadresses/database.json";
 const databsecsvPath = "./Carnet dadresses/database.csv";
@@ -10,7 +13,10 @@ const writeDatabasejson = (tableau)=>{
         if (err) throw err;
     });
 }
-
+const writeDatabasecsv = (tableau)=>{
+    const csv = ["id,name,tel,email"].concat(tableau.map(book => `${book.id}, ${book.name}, ${book.tel}, ${book.email}`)).join("\n")
+    fs.writeFileSync(databsecsvPath, csv)
+}
 const contactController = {
 
     createContact: (req, res)=>{
@@ -35,7 +41,8 @@ const contactController = {
                 database.push(book);
         
                 writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
-
+                writeDatabasecsv(database)
+                
                 
             })
             res.status(201).send({msg: "Created Successfully"})
@@ -94,7 +101,7 @@ const contactController = {
                     }else{res.status(404).send({msg: "invalid id"})}
         
                     writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
-
+                    writeDatabasecsv(database)
                 })
             },
 
@@ -120,7 +127,7 @@ const contactController = {
                     }else{res.status(404).send({msg: "invalid id"})}
         
                     writeDatabasejson(database) //Il faut encore synchroniser avec le fichier database.csv
-
+                    writeDatabasecsv(database)
                     
                 })
          },
